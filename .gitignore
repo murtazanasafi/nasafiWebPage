@@ -1,0 +1,8 @@
+# created by virtualenv automatically
+*.pyc
+*~
+__pycache__
+db.sqlite3
+/static
+.DS_Store
+secret_key.py
