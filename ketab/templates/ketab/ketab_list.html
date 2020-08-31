@@ -1,0 +1,44 @@
+{% include 'base.html' %}
+
+{% block content %}
+<br><br><br>
+    {% for obj in object_list %}
+        <div class="row">
+                <div class="col">
+
+                </div>
+
+                <div class="col-sm-6">
+                        <div class="row">
+                            <div class="card shadow-lg" style="width: 300px;">
+                                <img src="{% if obj.image %} {{obj.image.url}} {% else %} # {% endif %}" class="card-img-top" alt="...">
+                                <div class="card-body text-left">
+                                    <h3 class="card-title">{{obj.title}}</h3>
+                                    <p class="card-text">Content:<p> {{obj.content}}</p></p>
+                                    <hr>
+                                    <div class="tags">
+                                        {% for tag in obj.tags.names %}
+                                            <a href="/posts/search/?tag={{tag}}" class="badge badge-success">{{tag}}</a>
+                                        {% endfor %}
+                                        <hr>
+
+                                        Posted by: {{obj.user.first_name|title}} {{obj.user.last_name|title}}
+                                    </div>
+                                    <a href="{{obj.get_absolute_url}}" class="btn btn-primary">View Post</a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col">
+
+                </div>
+
+
+        </div>
+        <br>
+    {% endfor %}
+
+
+
+
+{% endblock content %}

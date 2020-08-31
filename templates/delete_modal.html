@@ -1,0 +1,15 @@
+<div id="id01" class="modal">
+              <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+              <form method="post" class="modal-content" action="delete/">
+                  {% csrf_token %}
+                <div class="container">
+                  <h1>Delete Page</h1>
+                  <p>Are you sure you want to delete your Post?</p>
+
+                  <div class="clearfix">
+                    <input type="submit" class="btn btn-danger btn-lg" value="Confirm">
+                  </div>
+                </div>
+              </form>
+        </div>
+    </div>

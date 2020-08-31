@@ -1,0 +1,17 @@
+{% include 'base.html' %}
+{% load crispy_forms_tags %}
+<h1>Hi this is a detail page</h1>
+
+
+<form method="POST" enctype="multipart/form-data">
+
+    <!-- Security token -->
+    {% csrf_token %}
+
+    <!-- Using the formset -->
+    {{ form|crispy }}
+
+    <input class="btn btn-success btn-lg" type="submit" value="Submit">
+    <a class="btn btn-danger btn-lg" type="Button" onclick="window.history.back()">Cancel</a>
+
+</form>

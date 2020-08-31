@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %} {{page_landing_title}} | {{block.super}} {% endblock head_title %}
+
+{% block content %}
+
+
+    <div class="row">
+
+    </div>
+    <div class="row">
+        <div class="card">
+            <div class="col-sm-12">
+                <p class="object title">Title: {{object.title}}</p>
+                {% if object.image %}
+                <p><img src="{{object.image.url}}" class="img-fluid" height="500" width="500" /></p>
+                {% endif %}
+                <hr>
+                <p>Content: <br> {{object.content}}</p>
+                <hr>
+                <div class="tags">
+                    {% for tag in object.tags.names %}
+                        <a href="/posts/search/?tag={{tag}}" class="badge badge-success">{{tag}}</a>
+                    {% endfor %}
+                </div>
+                <hr>
+                Posted by: {{object.user.first_name|title}} {{object.user.last_name|title}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <a href="/ketab" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Back</a>
+        <a href="edit" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Edit</a>
+        <button class="btn btn-danger btn-lg" onclick="document.getElementById('id01').style.display='block'">Delete</button>
+    </div>
+
+{% include 'delete_modal.html' %}
+
+{% endblock content %}

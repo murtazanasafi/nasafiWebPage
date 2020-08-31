@@ -1,0 +1,70 @@
+<!doctype html>
+
+{% load static %}
+
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+
+
+
+
+        <title>
+            {% block head_title %} Nasafi Ketab {% endblock head_title %}
+        </title>
+
+        <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+
+        <style>
+            {% block style %} {% endblock style %}
+        </style>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    </head>
+
+    <body>
+        <div class="row">
+            {% include "navbar.html" %}
+
+
+        </div>
+        <br>
+        <div class="container">
+
+            {% block content %}
+
+            {% endblock %}
+        </div>
+<!--        bootstrap4 javascript functions-->
+<!--        google jquery cdn-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!--            bootstrap4 cdn-->
+
+
+        <script>
+    // Get the modal
+    var modal = document.getElementById('id01');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    </script>
+
+
+    </body>
+
+
+</html>
