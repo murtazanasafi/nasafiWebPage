@@ -38,8 +38,10 @@ class KetabUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class KetabListView(ListView):
+    paginate_by = 4
     model = Ketab
     template_name = "ketab/ketab_list.html"
+
 
 
 class KetabDeleteView(LoginRequiredMixin, DeleteView):

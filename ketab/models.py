@@ -13,12 +13,12 @@ from account.models import Account
 def upload_location(instance, filename):
     KetabModel = instance.__class__
     print(KetabModel)
-    # try:
-    obj = KetabModel.objects.order_by('id').last()
-    new_id = int(obj.id)+1
-    # except:
-    #     new_id = 9999
-    #     print(new_id)
+    try:
+        obj = KetabModel.objects.order_by('id').last()
+        new_id = int(obj.id)+1
+    except:
+        new_id = 9999
+        print(new_id)
 
     if new_id is None:
         new_id = 1
