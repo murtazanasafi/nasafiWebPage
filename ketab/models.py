@@ -6,6 +6,7 @@ from taggit.models import TaggedItemBase
 from django.utils.text import slugify
 from django.urls import reverse
 from account.models import Account
+from django.db.models import Q
 
 # Create your models here.
 
@@ -51,6 +52,7 @@ class KetabManager(models.Manager):
                     Q(tags__name__icontains = query)
                         )
             qs = qs.filter(or_lookup).distinct()
+            print(qs)
         else:
             qs = qs.all()
 

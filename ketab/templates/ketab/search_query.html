@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<br>
+<br>
+<div class="container">
+
+
+
+    <div class="row">
+        <div class='col left' id="post-list">
+            <div class='row'>
+            {% for obj in object_list %}
+                    <div class="col" id="card-{{obj.id}}">
+                            <div class="card shadow-lg" style="width: 18rem;">
+                                {% if obj.image %}
+                              <img src="{{ obj.image.url }}" class="card-img-top img-thumbnail" alt="...">
+                                {% endif %}
+                              <div class="card-body">
+                                <h5 class="card-title">{{obj.title}}{% if obj.draft %}<span style="color: red;"> -Draft</span> {% endif %}</h5>
+                                  <h6>{% if obj.publish > today %} <span style="color: red;"> Future Date: {{obj.publish}} </span> {% else %} Published: {{obj.publish}} {% endif %}</h6>
+                                  <h5><small>updated: {{obj.updated|timesince}}</small></h5>
+                                <p class="card-text content-markdown">{{obj.content}}<br></p>
+                                <img src="{% static 'img/comment_icon.png' %}" class="icon" style="vertical-align: middle"> {{obj.comments.count}}</img>
+                                <div class="tags">
+                                    <p>Tags:
+                                    {% for tag in obj.tags.names %}
+                                    <a href="?tag={{tag}}" class="badge badge-success shadow">#{{tag}}</a>
+                                        {% endfor %}
+
+                                    </p>
+                                </div>
+
+                                <a href="{{obj.get_absolute_url}}" class="btn btn-primary shadow">View Detail</a>
+                              </div>
+                            </div>
+                    </div>
+
+
+            {% endfor %}
+            </div>
+    </div>
+
+
+    <div class="tags col-sm">
+        <h2>Distinct Tags: </h2>
+        {% for mt in dist_tags %}
+        <a href="/ketab/search/?tag={{mt}}" class="badge badge-success shadow">#{{mt}}</a>
+        {% endfor %}
+
+        <hr>
+
+        <h2>5 Most Common Tags:</h2>
+        {% for mt in common_tags %}
+        <a href="/ketab/search/?tag={{mt}}" class="badge badge-success shadow">#{{mt}}</a>
+        {% endfor %}
+
+
+    </div>
+
+
+
+</div>
+
+<hr>
+<br>
+            <div class="col" >
+        <div class="pagination" style="padding-left: 150px;">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+    </div>
+
+</div>
+{% endblock content %}

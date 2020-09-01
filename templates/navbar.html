@@ -2,6 +2,15 @@
 <div class="container pt-5">
   <nav class="navbar fixed-top navbar-dark navbar-light bg-primary">
     <a class="navbar-brand bg" href="/ketab">{{ user.username }}</a>
+    <div class="col search">
+        <h1>{{ title }} </h1>
+        <form method="GET" action="">
+        <input id="search-input" type="text" name="q" placeholder="Search post" value="{{request.GET.q}}"/>
+
+        <input class="btn badge-primary" type="Submit" value="Search"/>
+        <a href="/ketab" class="btn badge-secondary">Clear Search</a>
+        </form>
+    </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

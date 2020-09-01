@@ -4,6 +4,12 @@ from .forms import KetabForm
 from django.views.generic import CreateView, DeleteView,ListView,DetailView, UpdateView
 from django.urls import reverse_lazy
 
+
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
+
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
@@ -19,7 +25,7 @@ class KetabCreateView(LoginRequiredMixin, CreateView):
     form_class = KetabForm
 
 
-class KetabDetailView(DetailView):
+class KetabDetailView(LoginRequiredMixin, DetailView):
     model = Ketab
     template_name = "ketab/ketab_detail.html"
 
@@ -54,3 +60,56 @@ class KetabDeleteView(LoginRequiredMixin, DeleteView):
     model = Ketab
     template_name = "ketab/ketab_delete.html"
     success_url = reverse_lazy('ketab_list')
+
+
+class KetabSearchView(LoginRequiredMixin, ListView):
+
+
+    template_name = 'ketab/search_query.html'
+    queryset = Ketab.objects.all().order_by('-created_date')
+
+
+
+
+    def is_valid_queryparam(self, param):
+        return param != '' and param is not None
+
+    def get_queryset(self):
+
+        search_box_param = self.request.GET.get('q')
+        tag_param = self.request.GET.get('tag')
+
+        if self.is_valid_queryparam(search_box_param):
+            qs = Ketab.objects.search(self.request.GET.get('q', None)).order_by('-created_date')
+            return qs
+        if self.is_valid_queryparam(tag_param):
+            qs = Ketab.objects.search_tags(self.request.GET.get('tag', None)).order_by('-created_date')
+            return qs
+
+
+    def get_context_data(self, **kwargs):
+
+
+        context = super().get_context_data(**kwargs)
+
+        context['common_tags'] = Ketab.tags.most_common()[:5]
+        context['dist_tags'] = Ketab.tags.distinct()
+
+        paginator = Paginator(self.get_queryset(), 3)
+
+        page = self.request.GET.get('page')
+
+        try:
+            qs = paginator.page(page)
+        except PageNotAnInteger:
+            qs = paginator.page(1)
+        except EmptyPage:
+            qs = paginator.page(paginator.num_pages)
+
+
+        context['query_set'] = qs
+        #print(context)
+
+
+        return context
+
