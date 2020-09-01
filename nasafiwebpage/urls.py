@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from ketab.views import redirect_view
 
 #Serving static files during development
 from django.conf import settings
@@ -25,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ketab/', include('ketab.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('', redirect_view),
 ]
 
 

@@ -8,6 +8,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
+from django.shortcuts import redirect
+
+def redirect_view(request):
+    response = redirect('/ketab')
+    return response
+
 class KetabCreateView(LoginRequiredMixin, CreateView):
     template_name = "ketab/ketab_create.html"
     form_class = KetabForm
