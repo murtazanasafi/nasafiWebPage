@@ -49,7 +49,7 @@ class KetabUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('ketab_list')
 
 
-class KetabListView(ListView):
+class KetabListView(LoginRequiredMixin,ListView):
     paginate_by = 4
     model = Ketab
     template_name = "ketab/ketab_list.html"
