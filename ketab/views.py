@@ -73,7 +73,7 @@ class KetabDeleteView(LoginRequiredMixin, DeleteView):
 
 class KetabSearchView(LoginRequiredMixin, ListView):
 
-    paginate_by = 10
+    paginate_by = 4
     template_name = 'ketab/search_query.html'
 
 
