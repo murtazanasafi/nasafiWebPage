@@ -24,7 +24,7 @@
                                   <h6>{% if obj.publish > today %} <span style="color: red;"> Future Date: {{obj.publish}} </span> {% else %} Published: {{obj.publish}} {% endif %}</h6>
                                   <h5><small>updated: {{obj.updated|timesince}}</small></h5>
                                 <p class="card-text content-markdown">{{obj.content}}<br></p>
-                                <img src="{% static 'img/comment_icon.png' %}" class="icon" style="vertical-align: middle"> {{obj.comments.count}}</img>
+                                <img src="{% static 'icons/comment_icon.png' %}" class="icon"> {{obj.comments.count}}</img>
                                 <div class="tags">
                                     <p>Tags:
                                     {% for tag in obj.tags.names %}

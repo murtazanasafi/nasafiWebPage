@@ -7,6 +7,8 @@ from django.utils.text import slugify
 from django.urls import reverse
 from account.models import Account
 from django.db.models import Q
+from django.contrib.contenttypes.models import ContentType
+from comment.models import Comment
 
 # Create your models here.
 
@@ -35,8 +37,6 @@ class TaggedKetab(TaggedItemBase):
 
 
 class KetabManager(models.Manager):
-
-
 
     def active(self, *args, **kwargs):
         return super(KetabManager, self).filter(draft=False).filter(publish__lte=timezone.now())
@@ -96,6 +96,19 @@ class Ketab(models.Model):
         value = self.title
         self.slug = slugify(value, allow_unicode=True)
         super(Ketab, self).save(*args, **kwargs)
+
+    @property
+    def comments(self):
+        instance = self
+        qs = Comment.objects.filter_by_instance(instance)
+        return qs
+
+    @property
+    def get_content_type(self):
+        instance = self
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        return content_type
+
 
     def get_absolute_url(self):
         return reverse('ketab_detail', kwargs={'slug': self.slug, 'pk': self.pk})

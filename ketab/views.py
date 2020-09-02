@@ -3,11 +3,17 @@ from .models import Ketab
 from .forms import KetabForm
 from django.views.generic import CreateView, DeleteView,ListView,DetailView, UpdateView
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 
 
 from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
+
+from django.contrib.contenttypes.models import ContentType
+
+from comment.models import Comment
+from comment.forms import CommentForm
 
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -33,18 +39,49 @@ class KetabCreateView(LoginRequiredMixin, CreateView):
         return super(KetabCreateView, self).form_valid(form)
 
 
+
+
 class KetabDetailView(LoginRequiredMixin, DetailView):
     model = Ketab
     template_name = "ketab/ketab_detail.html"
+    success_url = reverse_lazy('ketab_detail')
+    pk_url_kwarg = 'pk'
+    slug_url_kwarg = 'slug'
 
 
-    # override context data
+
+    def get_comment_initial(self):
+        pk_slug = self.pk_url_kwarg
+
+        # comment = get_object_or_404(Comment, slug=slug, pk = pk )
+        initial= {
+            'content_type': ContentType.objects.get_for_model(Ketab),
+            'object_id': self.kwargs['pk']
+        }
+
+
+        return initial
+
+    def post_comment(self, request, *args, **kwargs):
+        pass
+
+    def form_valid(self, form):
+       pass
+
     def get_context_data(self, *args, **kwargs):
         context = super(KetabDetailView,
                         self).get_context_data(*args, **kwargs)
+
+
+
         # add extra field
         context["page_landing_title"] = "Detail View"
+
         return context
+
+
+
+
 
 
 class KetabUpdateView(LoginRequiredMixin, UpdateView):

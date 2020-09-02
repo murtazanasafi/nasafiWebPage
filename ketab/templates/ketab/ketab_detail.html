@@ -9,6 +9,7 @@
     <div class="row">
 
     </div>
+
     <div class="row">
         <div class="card">
             <div class="col-sm-12">
@@ -29,10 +30,34 @@
             </div>
         </div>
     </div>
+
+
+
     <div class="row">
         <a href="/ketab" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Back</a>
         <a href="edit" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Edit</a>
         <button class="btn btn-danger btn-lg" onclick="document.getElementById('id01').style.display='block'">Delete</button>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col">
+            <h6>
+                Comments:
+            </h6>
+            <!-- Security token -->
+            {% csrf_token %}
+
+            <!-- Using the formset -->
+            {% for comment in object.comments.all %}
+                <p> {{comment.user}}</p>
+                <p> content: {{comment.content}}</p>
+            {% endfor %}
+
+
+
+        </div>
     </div>
 
 {% include 'delete_modal.html' %}

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'ketab',
+    'comment',
     'taggit',
     'pagedown',
     'crispy_forms',

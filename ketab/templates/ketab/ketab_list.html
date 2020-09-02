@@ -1,18 +1,20 @@
 {% include 'base.html' %}
-
+{% load static %}
 {% block content %}
 <br><br><br>
     {% for obj in object_list %}
         <div class="row">
 
 
-                <div class="col-sm-6">
+                <div class="col">
                         <div class="row">
-                            <div class="card shadow-lg" style="width: 600px; margin-left: 50px;">
+                            <div class="card shadow-lg" style="width: 600px; margin-left: 50px; margin-right: 50px;">
                                 <img src="{% if obj.image %} {{obj.image.url}} {% else %} # {% endif %}" class="card-img-top" alt="...">
                                 <div class="card-body text-left">
                                     <h3 class="card-title">{{obj.title}}</h3>
                                     <p class="card-text">Content:<p> {{obj.content}}</p></p>
+                                    <hr>
+                                    <img src="{% static 'icons/comment_icon.png' %}" class="icon"> {{obj.comments.count}}</img>
                                     <hr>
                                     <div class="tags">
                                         {% for tag in obj.tags.names %}
