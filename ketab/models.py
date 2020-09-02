@@ -72,7 +72,7 @@ class KetabManager(models.Manager):
 
 
 class Ketab(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=False, default=1)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=250)
     content = models.TextField()
     image = models.ImageField(upload_to=upload_location, null=True, blank=True)

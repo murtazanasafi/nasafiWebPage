@@ -4,7 +4,7 @@
     <a class="navbar-brand bg" href="/ketab">{{ user.username }}</a>
     <div class="col search">
         <h1>{{ title }} </h1>
-        <form method="GET" action="">
+        <form method="GET" action="/ketab/search/">
         <input id="search-input" type="text" name="q" placeholder="Search post" value="{{request.GET.q}}"/>
 
         <input class="btn badge-primary" type="Submit" value="Search"/>

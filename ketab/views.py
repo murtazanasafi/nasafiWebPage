@@ -23,6 +23,14 @@ def redirect_view(request):
 class KetabCreateView(LoginRequiredMixin, CreateView):
     template_name = "ketab/ketab_create.html"
     form_class = KetabForm
+    success_url = '/ketab'
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.user = self.request.user
+        print(self.request.user)
+        obj.save()
+        return super(KetabCreateView, self).form_valid(form)
 
 
 class KetabDetailView(LoginRequiredMixin, DetailView):
@@ -49,6 +57,7 @@ class KetabUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('ketab_list')
 
 
+
 class KetabListView(LoginRequiredMixin,ListView):
     paginate_by = 4
     model = Ketab
@@ -64,28 +73,32 @@ class KetabDeleteView(LoginRequiredMixin, DeleteView):
 
 class KetabSearchView(LoginRequiredMixin, ListView):
 
-
+    paginate_by = 10
     template_name = 'ketab/search_query.html'
-    queryset = Ketab.objects.all().order_by('-created_date')
+
 
 
 
 
     def is_valid_queryparam(self, param):
-        return param != '' and param is not None
+        print('is valid being run, param is: {}'.format(param))
+        if param !="" and param is not None:
+            return param
 
     def get_queryset(self):
 
         search_box_param = self.request.GET.get('q')
+
         tag_param = self.request.GET.get('tag')
 
         if self.is_valid_queryparam(search_box_param):
             qs = Ketab.objects.search(self.request.GET.get('q', None)).order_by('-created_date')
             return qs
-        if self.is_valid_queryparam(tag_param):
+        elif self.is_valid_queryparam(tag_param):
             qs = Ketab.objects.search_tags(self.request.GET.get('tag', None)).order_by('-created_date')
             return qs
-
+        else:
+            return Ketab.objects.all().order_by('-created_date')
 
     def get_context_data(self, **kwargs):
 
@@ -106,9 +119,13 @@ class KetabSearchView(LoginRequiredMixin, ListView):
         except EmptyPage:
             qs = paginator.page(paginator.num_pages)
 
+        except InvalidPage:
+            qs = paginator.page(1)
+
+
 
         context['query_set'] = qs
-        #print(context)
+        print(context)
 
 
         return context
